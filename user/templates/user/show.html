@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Time Table</title>
+    <style>
+        body {
+            font: 12px/1.4 Verdana, Arial;
+            background: #eee;
+            height: 100%;
+            margin: 25px 0;
+            padding: 0
+        }
+
+        h1 {
+            font: 24px Georgia, Verdana;
+            margin: 0
+        }
+
+        h2 {
+            font-size: 12px;
+            font-weight: normal;
+            font-style: italic;
+            margin: 0 0 20px
+        }
+
+        p {
+            margin-top: 0
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 20px
+        }
+
+        #testdiv {
+            width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 20px 25px;
+            background: #fff
+        }
+
+        #tinybox {
+            position: absolute;
+            display: none;
+            padding: 10px;
+            background: #fff url(images/preload.gif) no-repeat 50% 50%;
+            border: 10px solid #e3e3e3;
+            z-index: 2000
+        }
+
+        #tinymask {
+            position: absolute;
+            display: none;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: #000;
+            z-index: 1500
+        }
+
+        #tinycontent {
+            background: #fff
+        }
+
+        .button {
+            font: 14px Georgia, Verdana;
+            margin-bottom: 10px;
+            padding: 8px 10px 9px;
+            border: 1px solid #ccc;
+            background: #eee;
+            cursor: pointer
+        }
+
+        .button:hover {
+            border: 1px solid #bbb;
+            background: #e3e3e3
+        }
+    </style>
+</head>
+
+<body>
+    {% if user.is_authenticated %}
+
+    <br>
+    <div class="container" style="width: 1400px;">
+
+        <div class="thead-dark" style="background-color: #000;">
+            <div class="col-md-3 row">
+                <h1>welcome: {{request.user.username}}</h1>
+            </div>
+            <div class="col-md-3 row">
+                <a href="{% url 'logout' %}">
+                    <h1><i class="fa fa-user-plus" aria-hidden="true"></i>
+                        logout</h1>
+                </a>
+            </div>
+
+        </div>
+        <br>
+        <br>
+        <H1>
+            <FONT COLOR="DARKCYAN">
+                <CENTER>COLLEGE TIME TABLE
+
+            </FONT>
+            <hr style="background-color: #000;width: 300px;">
+        </H1>
+
+        <br>
+        <br>
+        <table class="table table-striped table-bordered table-sm">
+            <thead class="thead-dark" style="background-color: #000;color: #fff;">
+                <tr>
+                    <th>Sr No:</th>
+                    <th>Days</th>
+                    <th>8:30-9:30</th>
+                    <th>9:30-10:30</th>
+                    <th>10:3-11:30</th>
+                    <th>11:30-12:30</th>
+                    <th>12:30-2:00</th>
+                    <th>2:00-3:00</th>
+                    <th>3:00-4:00</th>
+                    <th>4:00-5:00</th>
+
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td style="background-color: rgb(234, 0, 255);">{{ employee.eid }}</td>
+                    <td style="background-color: greenyellow;">{{ employee.edays }}</td>
+                    <td style="background-color: rgb(243, 176, 159);">{{ employee.esub1 }}</td>
+                    <td style="background-color: rgb(47, 255, 227);">{{ employee.esub2 }}</td>
+                    <td style="background-color: rgb(103, 248, 122);">{{ employee.esub3 }}</td>
+                    <td style="background-color: rgb(47, 179, 255);">{{ employee.esub4 }}</td>
+                    <td style="background-color: greenyellow;">{{ employee.esub5 }}</td>
+                    <td style="background-color: rgb(42, 96, 158);">{{ employee.esub6 }}</td>
+                    <td style="background-color: rgb(197, 135, 189);">{{ employee.esub7 }}</td>
+                    <td style="background-color: rgb(255, 47, 193);">{{ employee.esub8 }}</td>
+                    <td style="background-color: rgb(144, 47, 255); ">
+                        <a style="color: #000;padding: 10px;" href="/edit/{{ employee.id }}"><span
+                                class="glyphicon glyphicon-pencil">Edit</span></a>
+                        <a style="color: #000;" href="/delete/{{ employee.id }}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <br>
+    <center><a href="/emp" class="btn btn-primary">Add New Record</a></center>
+    {% else %}
+    <center>
+        <h1>log in, plz...</h1>
+        <p>You Have Not LogedIn</p>
+
+        <a href="http://127.0.0.1:8000/">Go to login page</a>
+    </center>
+    {% endif %}
+</body>
+
+</html>
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Employee Records</title>
+    <style>
+        body {
+            font: 12px/1.4 Verdana, Arial;
+            background: #eee;
+            height: 100%;
+            margin: 25px 0;
+            padding: 0
+        }
+
+        h1 {
+            font: 24px Georgia, Verdana;
+            margin: 0
+        }
+
+        h2 {
+            font-size: 12px;
+            font-weight: normal;
+            font-style: italic;
+            margin: 0 0 20px
+        }
+
+        p {
+            margin-top: 0
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 20px
+        }
+
+        #testdiv {
+            width: 600px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 20px 25px;
+            background: #fff
+        }
+
+        #tinybox {
+            position: absolute;
+            display: none;
+            padding: 10px;
+            background: #fff url(images/preload.gif) no-repeat 50% 50%;
+            border: 10px solid #e3e3e3;
+            z-index: 2000
+        }
+
+        #tinymask {
+            position: absolute;
+            display: none;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: #000;
+            z-index: 1500
+        }
+
+        #tinycontent {
+            background: #fff
+        }
+
+        .button {
+            font: 14px Georgia, Verdana;
+            margin-bottom: 10px;
+            padding: 8px 10px 9px;
+            border: 1px solid #ccc;
+            background: #eee;
+            cursor: pointer
+        }
+
+        .button:hover {
+            border: 1px solid #bbb;
+            background: #e3e3e3
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" style="width: 1400px;">
+        <table class="table table-striped table-bordered table-sm">
+            <thead class="thead-dark" style="background-color: #000;color: #fff;">
+                <tr>
+                    <th>Sr No:</th>
+                    <th>Days</th>
+                    <th>8:30-9:30</th>
+                    <th>9:30-10:30</th>
+                    <th>10:3-11:30</th>
+                    <th>11:30-12:30</th>
+                    <th>12:30-2:00</th>
+                    <th>2:00-3:00</th>
+                    <th>3:00-4:00</th>
+                    <th>4:00-5:00</th>
+
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.eid }}</td>
+                    <td>{{ employee.edays }}</td>
+                    <td>{{ employee.esub1 }}</td>
+                    <td>{{ employee.esub2 }}</td>
+                    <td>{{ employee.esub3 }}</td>
+                    <td>{{ employee.esub4 }}</td>
+                    <td>{{ employee.esub5 }}</td>
+                    <td>{{ employee.esub6 }}</td>
+                    <td>{{ employee.esub7 }}</td>
+                    <td>{{ employee.esub8 }}</td>
+                    <td>
+                        <a href="/edit/{{ employee.id }}"><span class="glyphicon glyphicon-pencil">Edit</span></a>
+                        <a href="/delete/{{ employee.id }}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <br>
+    <center><a href="/emp" class="btn btn-primary">Add New Record</a></center>
+</body>
+
+</html> -->
